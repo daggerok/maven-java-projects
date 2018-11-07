@@ -1,0 +1,1 @@
+= maven-java-projects image:https://travis-ci.org/daggerok/maven-java-projects.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/maven-java-projects"]
