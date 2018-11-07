@@ -31,5 +31,6 @@ before_install:
 script:
 - export root=$(pwd)
 #
-- ./mvnw clean package
+- ./mvnw >/dev/null
+- ./mvnw -Pbundle -pl :rest-services
 - stop_any 80 8080
