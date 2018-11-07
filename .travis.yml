@@ -1,0 +1,35 @@
+git:
+  depth: false
+  quiet: true
+
+notifications:
+  email: false
+
+env:
+  global:
+  - TERM=dumb
+
+addons:
+  apt:
+    packages:
+    - bash
+    - curl
+    - jq
+    - python-pip
+    - oracle-java8-installer
+    - oracle-java8-set-default
+    update: true
+
+install: true
+before_install:
+- sudo pip install httpie >/dev/null 2>&1
+- source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
+- stop_any 8080 3000 80 >/dev/null
+- java -version
+- javac -version
+
+script:
+- export root=$(pwd)
+#
+- ./mvnw clean package
+- stop_any 80 8080
