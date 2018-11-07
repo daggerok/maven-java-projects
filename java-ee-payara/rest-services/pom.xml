@@ -17,7 +17,29 @@
     <payara.micro.version>5.182</payara.micro.version>
   </properties>
 
+  <dependencies>
+    <dependency>
+      <groupId>fish.payara.extras</groupId>
+      <artifactId>payara-embedded-web</artifactId>
+      <version>${payara.micro.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.daggerok</groupId>
+      <artifactId>libraries</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.vavr</groupId>
+      <artifactId>vavr</artifactId>
+    </dependency>
+  </dependencies>
+
   <build>
+    <defaultGoal>clean package</defaultGoal>
+
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -40,17 +62,18 @@
       <id>bundle</id>
       <build><!-- ./mvnw -Pbundle -pl :rest-services
       ./mvnw -pl :rest-services package payara-micro:bundle -Pbundle -->
-        <defaultGoal>clean package payara-micro:bundle</defaultGoal>
+        <defaultGoal>payara-micro:bundle</defaultGoal>
         <plugins>
           <plugin>
             <groupId>fish.payara.maven.plugins</groupId>
             <artifactId>payara-micro-maven-plugin</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
             <executions>
               <execution>
                 <goals>
                   <goal>bundle</goal>
                 </goals>
+                <phase>package</phase>
               </execution>
             </executions>
             <configuration>
@@ -62,7 +85,7 @@
                 </option>
                 <option>
                   <key>--clusterName</key>
-                  <value>app</value>
+                  <value>${project.artifactId}</value>
                 </option>
               </commandLineOptions>
             </configuration>
@@ -80,12 +103,13 @@
           <plugin>
             <groupId>fish.payara.maven.plugins</groupId>
             <artifactId>payara-micro-maven-plugin</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
             <executions>
               <execution>
                 <goals>
                   <goal>start</goal>
                 </goals>
+                <phase>site</phase>
               </execution>
             </executions>
             <configuration>

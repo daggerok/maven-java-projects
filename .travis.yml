@@ -32,5 +32,9 @@ script:
 - export root=$(pwd)
 #
 - ./mvnw >/dev/null
-- ./mvnw -Pbundle -pl :rest-services
+- ./mvnw -pl :rest-services -Pbundle >/dev/null
+- java -jar ./java-ee-payara/rest-services/target/*-microbundle.jar &
+- sleep 20
+- http :8080
+- http :8080/ololo || true
 - stop_any 80 8080

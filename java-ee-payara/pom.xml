@@ -13,7 +13,8 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>rest-services</module>
     <module>libraries</module>
+    <module>rest-services</module>
   </modules>
+
 </project>
