@@ -1,5 +1,6 @@
 package com.github.daggerok.resources;
 
+import com.github.daggerok.data.customer.CustomerEntity;
 import com.github.daggerok.interceptors.LoggerInterceptor;
 import io.vavr.collection.HashMap;
 import lombok.SneakyThrows;
@@ -9,11 +10,11 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.interceptor.Interceptors;
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.transaction.Transactional;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.time.*;
 import java.util.Date;
@@ -29,6 +30,9 @@ public class CustomerResource {
 
   @Resource(lookup = "java:global/ServicesDS")
   DataSource dataSource;
+
+  @PersistenceContext
+  EntityManager em;
 
   @GET
   @Path("json")
@@ -70,10 +74,24 @@ public class CustomerResource {
                       "date", new Date(),
                       "local-date", LocalDate.now(),
                       "local-time", LocalTime.now(),
-                      "local", LocalDateTime.now(),
-                      "zoned", ZonedDateTime.now(),
-                      "instant", Instant.now(),
-                      "url", dataSource.getConnection().getMetaData().getURL())
+//                      "local", LocalDateTime.now(),
+//                      "instant", Instant.now(),
+                      "em.find", em.createNamedQuery("CustomerEntity.findAll", CustomerEntity.class)
+                                   .getResultList(),
+                      "em.count", em.createNamedQuery("CustomerEntity.count", Long.class)
+                                    .getSingleResult(),
+                      "url", dataSource.getConnection().getMetaData().getURL(),
+                      "zoned", ZonedDateTime.now())
                   .toJavaMap();
+  }
+
+  @POST
+  @Transactional
+  @Consumes(APPLICATION_JSON)
+  public CustomerEntity save(JsonObject json) {
+    final String data = json.getString("data", "");
+    final CustomerEntity customerEntity = new CustomerEntity(data);
+    em.persist(customerEntity);
+    return customerEntity;
   }
 }

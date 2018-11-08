@@ -14,7 +14,8 @@
 
   <properties>
     <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-    <payara.micro.version>5.182</payara.micro.version>
+    <!--<payara.micro.version>5.182</payara.micro.version>-->
+    <payara.micro.version>5.183</payara.micro.version>
   </properties>
 
   <dependencies>
