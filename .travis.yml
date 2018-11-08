@@ -1,6 +1,5 @@
 git:
   depth: false
-  quiet: true
 
 notifications:
   email: false
@@ -18,7 +17,6 @@ addons:
     - python-pip
     - oracle-java8-installer
     - oracle-java8-set-default
-    update: true
 
 install: true
 before_install:
@@ -35,7 +33,8 @@ script:
 - ./mvnw -pl :rest-services -Pbundle >/dev/null
 - java -jar ./java-ee-payara/rest-services/target/*-microbundle.jar &
 - sleep 20
-- http :8080
-- http :8080/resp\?page=-4
-- http :8080/json\?page=-4 || true
+- http :8080 || true
+- http -a anything:here :8080
+- http -a abc:xyz :8080/resp\?page=-4
+- http -a qwerty:123 :8080/json\?page=-4 || true
 - stop_any 80 8080

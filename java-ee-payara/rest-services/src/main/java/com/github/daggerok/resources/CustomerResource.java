@@ -13,9 +13,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.util.Date;
 import java.util.Map;
 
@@ -67,6 +65,8 @@ public class CustomerResource {
                       "page", page,
                       "size", size,
                       "date", new Date(),
+                      "local-date", LocalDate.now(),
+                      "local-time", LocalTime.now(),
                       "local", LocalDateTime.now(),
                       "zoned", ZonedDateTime.now(),
                       "instant", Instant.now(),

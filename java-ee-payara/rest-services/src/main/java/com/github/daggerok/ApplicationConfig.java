@@ -1,5 +1,6 @@
 package com.github.daggerok;
 
+import com.github.daggerok.providers.AuthFilterProvider;
 import com.github.daggerok.providers.ExceptionMapperProvider;
 import com.github.daggerok.providers.JacksonProvider;
 import com.github.daggerok.resources.CustomerResource;
@@ -20,6 +21,7 @@ public class ApplicationConfig extends Application {
     return List.of(CustomerResource.class,
                    JacksonProvider.class,
                    JacksonJsonProvider.class,
+                   AuthFilterProvider.class,
                    ExceptionMapperProvider.class)
                .toJavaSet();
   }
