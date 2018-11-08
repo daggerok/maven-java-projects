@@ -8,6 +8,7 @@ import com.github.daggerok.providers.JacksonProvider;
 import com.github.daggerok.resources.CustomerResource;
 import io.vavr.collection.List;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
+import org.glassfish.jersey.jsonp.JsonProcessingFeature;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.ApplicationPath;
@@ -21,8 +22,9 @@ public class ApplicationConfig extends Application {
   @Override
   public Set<Class<?>> getClasses() {
     return List.of(CustomerResource.class,
-                   JacksonProvider.class,
-                   JacksonJsonProvider.class,
+                   //JacksonProvider.class,
+                   //JacksonJsonProvider.class,
+                   JsonProcessingFeature.class,
                    AuthFilterProvider.class,
                    CorsFilterProvider.class,
                    LoggerInterceptor.class,
