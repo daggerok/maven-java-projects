@@ -1,10 +1,13 @@
 package com.github.daggerok.resources;
 
 import io.vavr.collection.HashMap;
+import lombok.SneakyThrows;
 
+import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.sql.DataSource;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -19,8 +22,12 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Produces(APPLICATION_JSON)
 public class CustomerResource {
 
+  @Resource(lookup = "java:global/ServicesDS")
+  DataSource dataSource;
+
   @GET
   @Path("json")
+  @SneakyThrows
   public JsonObject getJsonObject(@QueryParam("page") int page,
                                   @QueryParam("size") int size) {
 
@@ -28,11 +35,13 @@ public class CustomerResource {
                .add("hello", "world")
                .add("page", page)
                .add("size", size)
+               .add("url", dataSource.getConnection().getMetaData().getURL())
                .build();
   }
 
   @GET
   @Path("resp")
+  @SneakyThrows
   public Response getResponse(@QueryParam("page") int page,
                               @QueryParam("size") int size) {
 
@@ -40,17 +49,20 @@ public class CustomerResource {
                            .add("hello", "world")
                            .add("page", page)
                            .add("size", size)
+                           .add("url", dataSource.getConnection().getMetaData().getURL())
                            .build())
                    .build();
   }
 
   @GET
+  @SneakyThrows
   public Map getMap(@QueryParam("page") int page,
                     @QueryParam("size") int size) {
 
     return HashMap.of("hello", "world",
                       "page", page,
-                      "size", size)
+                      "size", size,
+                      "url", dataSource.getConnection().getMetaData().getURL())
                   .toJavaMap();
   }
 }
