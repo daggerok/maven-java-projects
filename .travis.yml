@@ -33,8 +33,9 @@ script:
 - export root=$(pwd)
 #
 - ./mvnw >/dev/null
-- ./mvnw -pl :rest-services -Pbundle >/dev/null
-- java -jar ./java-ee-payara/rest-services/target/*-microbundle.jar &
+#
+- ./mvnw -pl :java-ee-payara-rest-services -Pbundle >/dev/null
+- java -jar ./java-ee-payara/java-ee-payara-rest-services/target/*-microbundle.jar &
 - sleep 20
 - http :8080 || true
 - http -a anything:here :8080
@@ -44,3 +45,13 @@ script:
 - http -a qwerty:123 :8080/ data='ololo trololo'
 - http -a anything:here :8080
 - stop_any 80 8080
+#
+- java -jar ./dropwizard/dropwizard-rest-services/target/dropwizard-*.jar server ./dropwizard/dropwizard-rest-services/config.yml &
+- sleep 20
+- http :9000 || true
+- http -a anything:here :9000
+- http -a qwerty:123 :9000/json\?page=-4 || true
+- http -a qwerty:123 :9000/ data=ololo
+- http -a qwerty:123 :9000/ data='ololo trololo'
+- http -a anything:here :9000
+- stop_any 80 9000

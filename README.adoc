@@ -1,1 +1,7 @@
 = maven-java-projects image:https://travis-ci.org/daggerok/maven-java-projects.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/maven-java-projects"]
+
+.JavaEE
+[source,bash]
+----
+ ./mvnw clean ; ./mvnw ; ./mvnw -pl :java-ee-payara-rest-services -Pbundle ; ./mvnw -pl :java-ee-payara-rest-services -Pstart
+----
