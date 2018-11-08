@@ -20,11 +20,6 @@ import static com.fasterxml.jackson.databind.SerializationFeature.*;
 
 public class DropwizardApplication extends Application<DropwizardConfig> {
 
-  @SneakyThrows
-  public static void main(String[] args) {
-    new DropwizardApplication().run(args);
-  }
-
   private final HibernateBundle<DropwizardConfig> hibernate =
       new HibernateBundle<DropwizardConfig>(CustomerEntity.class) {
         @Override
@@ -32,6 +27,11 @@ public class DropwizardApplication extends Application<DropwizardConfig> {
           return configuration.getDataSourceFactory();
         }
       };
+
+  @SneakyThrows
+  public static void main(String[] args) {
+    new DropwizardApplication().run(args);
+  }
 
   @Override
   public void initialize(Bootstrap<DropwizardConfig> bootstrap) {

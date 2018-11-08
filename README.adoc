@@ -3,5 +3,7 @@
 .JavaEE
 [source,bash]
 ----
- ./mvnw clean ; ./mvnw ; ./mvnw -pl :java-ee-payara-rest-services -Pbundle ; ./mvnw -pl :java-ee-payara-rest-services -Pstart
+./mvnw clean ; ./mvnw
+./mvnw -pl :java-ee-payara-rest-services -Pbundle ; ./mvnw -pl :java-ee-payara-rest-services -Pstart
+java -jar ./dropwizard/dropwizard-rest-services/target/dropwizard-*.jar server ./dropwizard/dropwizard-rest-services/config.yml
 ----

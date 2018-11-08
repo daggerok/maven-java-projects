@@ -21,6 +21,11 @@ import static lombok.AccessLevel.PACKAGE;
 @EqualsAndHashCode(callSuper = false)
 public class CustomerEntity extends BaseEntity {
 
+  @Enumerated(STRING)
+  Status status;
+  @Column(name = "some_data")
+  String data;
+
   public CustomerEntity(String data) {
     this.data = data;
   }
@@ -28,10 +33,4 @@ public class CustomerEntity extends BaseEntity {
   enum Status {
     ACTIVE, INACTIVE;
   }
-
-  @Enumerated(STRING)
-  Status status;
-
-  @Column(name = "some_data")
-  String data;
 }
