@@ -1,10 +1,12 @@
 package com.github.daggerok.resources;
 
+import com.github.daggerok.interceptors.LoggerInterceptor;
 import io.vavr.collection.HashMap;
 import lombok.SneakyThrows;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
+import javax.interceptor.Interceptors;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.sql.DataSource;
@@ -22,6 +24,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Path("")
 @ApplicationScoped
 @Produces(APPLICATION_JSON)
+@Interceptors(LoggerInterceptor.class)
 public class CustomerResource {
 
   @Resource(lookup = "java:global/ServicesDS")

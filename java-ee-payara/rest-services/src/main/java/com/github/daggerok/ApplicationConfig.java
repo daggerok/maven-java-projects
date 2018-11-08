@@ -1,5 +1,6 @@
 package com.github.daggerok;
 
+import com.github.daggerok.interceptors.LoggerInterceptor;
 import com.github.daggerok.providers.AuthFilterProvider;
 import com.github.daggerok.providers.CorsFilterProvider;
 import com.github.daggerok.providers.ExceptionMapperProvider;
@@ -24,6 +25,7 @@ public class ApplicationConfig extends Application {
                    JacksonJsonProvider.class,
                    AuthFilterProvider.class,
                    CorsFilterProvider.class,
+                   LoggerInterceptor.class,
                    ExceptionMapperProvider.class)
                .toJavaSet();
   }
