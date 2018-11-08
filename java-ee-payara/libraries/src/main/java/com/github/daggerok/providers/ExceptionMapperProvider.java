@@ -19,11 +19,13 @@ public class ExceptionMapperProvider implements ExceptionMapper<Exception> {
 
   @Override
   public Response toResponse(Exception exception) {
-    log.severe(() -> format("oops: %s", exception.getLocalizedMessage()));
+    final String error = null == exception.getLocalizedMessage() ?
+        exception.getClass().getSimpleName() : exception.getLocalizedMessage();
+    log.severe(() -> format("oops %s: %s", exception.getClass().getName(), error));
     return Response.status(BAD_REQUEST)
                    .header(ACCEPT, APPLICATION_JSON)
                    .header(CONTENT_TYPE, APPLICATION_JSON)
-                   .entity(singletonMap("error", exception.getLocalizedMessage()))
+                   .entity(singletonMap("error", error))
                    .build();
   }
 }

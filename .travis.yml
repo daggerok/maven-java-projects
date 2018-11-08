@@ -36,5 +36,6 @@ script:
 - java -jar ./java-ee-payara/rest-services/target/*-microbundle.jar &
 - sleep 20
 - http :8080
-- http :8080/ololo || true
+- http :8080/resp\?page=-4
+- http :8080/json\?page=-4 || true
 - stop_any 80 8080

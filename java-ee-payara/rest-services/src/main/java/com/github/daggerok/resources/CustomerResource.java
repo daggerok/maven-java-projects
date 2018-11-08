@@ -13,6 +13,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.Map;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -29,7 +33,7 @@ public class CustomerResource {
   @Path("json")
   @SneakyThrows
   public JsonObject getJsonObject(@QueryParam("page") int page,
-                                  @QueryParam("size") int size) {
+                                  @QueryParam("size") Integer size) {
 
     return Json.createObjectBuilder()
                .add("hello", "world")
@@ -57,11 +61,15 @@ public class CustomerResource {
   @GET
   @SneakyThrows
   public Map getMap(@QueryParam("page") int page,
-                    @QueryParam("size") int size) {
+                    @QueryParam("size") Integer size) {
 
     return HashMap.of("hello", "world",
                       "page", page,
                       "size", size,
+                      "date", new Date(),
+                      "local", LocalDateTime.now(),
+                      "zoned", ZonedDateTime.now(),
+                      "instant", Instant.now(),
                       "url", dataSource.getConnection().getMetaData().getURL())
                   .toJavaMap();
   }
