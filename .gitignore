@@ -10,7 +10,8 @@ build/
 target/
 struts/struts-rest-services/src/main/js/node_modules
 struts/struts-rest-services/src/main/webapp/*
-!struts/struts-rest-services/src/main/webapp/.gitkeep
+!struts/struts-rest-services/src/main/webapp/WEB-INF/*
+!struts/struts-rest-services/src/main/webapp/WEB-INF/web.xml
 # js
 node_modules
 # local env files

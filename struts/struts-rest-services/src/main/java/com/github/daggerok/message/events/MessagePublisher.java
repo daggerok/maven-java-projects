@@ -1,13 +1,14 @@
 package com.github.daggerok.message.events;
 
 import com.github.daggerok.message.data.Message;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
+import java.util.UUID;
 
-@Slf4j
+@Log4j2
 @Stateless
 public class MessagePublisher {
 
@@ -15,7 +16,7 @@ public class MessagePublisher {
   Event<MessageCreatedEvent> events;
 
   public MessageCreatedEvent publish(String messageBody) {
-    final Message message = Message.of(messageBody);
+    final Message message = Message.of(UUID.randomUUID().toString(), messageBody);
     final MessageCreatedEvent event = MessageCreatedEvent.of(message);
     log.info("publishing: {}", event);
     events.fire(event);

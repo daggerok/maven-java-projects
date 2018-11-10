@@ -1,47 +1,45 @@
 package com.github.daggerok.message.data;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.ConcurrencyManagement;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.enterprise.context.ApplicationScoped;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
-import static java.util.Objects.nonNull;
-import static javax.ejb.ConcurrencyManagementType.BEAN;
+import static com.github.daggerok.message.data.MessageEntity.FIND_ALL;
+import static com.github.daggerok.message.data.MessageEntity.FIND_BY_ID;
+import static java.util.stream.Collectors.toList;
 
-@Startup
-@Singleton
-@ApplicationScoped
-@ConcurrencyManagement(BEAN)
+@Stateless
 public class MessageRepository {
 
-  ConcurrentHashMap<String, String> db;
-
-  @PostConstruct
-  public void init() {
-    db = new ConcurrentHashMap<>();
-  }
+  @PersistenceContext
+  EntityManager em;
 
   public void save(Message message) {
-    final String body = message.getBody();
-    if (body == null || body.trim().isEmpty())
-      throw new IllegalStateException("message.null.or.empty");
-    final UUID id = message.getId() == null
-        ? UUID.randomUUID() : message.getId();
-    db.put(id.toString(), body);
+    final MessageEntity entity = MessageEntity.of(message.getId(), message.getBody());
+    em.persist(entity);
   }
 
   public List<Message> findAll() {
-    return db.entrySet()
+    return em.createNamedQuery(FIND_ALL, MessageEntity.class)
+             .getResultList()
              .stream()
-             .filter(e -> nonNull(e))
-             .filter(e -> nonNull(e.getKey()))
-             .filter(e -> nonNull(e.getValue()))
-             .map(e -> Message.allOf(UUID.fromString(e.getKey()), e.getValue()))
-             .collect(Collectors.toList());
+             .map(MessageRepository::messageMapper)
+             .collect(toList())
+        ;
+  }
+
+  public Optional<Message> findById(String id) {
+    return em.createNamedQuery(FIND_BY_ID, MessageEntity.class)
+             .setParameter("id", id)
+             .getResultList()
+             .stream()
+             .map(MessageRepository::messageMapper)
+             .findFirst();
+  }
+
+  private static Message messageMapper(MessageEntity entity) {
+    return Message.of(entity.getId(), entity.getBody());
   }
 }

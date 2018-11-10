@@ -10,22 +10,16 @@ import org.apache.struts2.convention.annotation.*;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import java.util.UUID;
+import javax.servlet.http.HttpServletResponse;
 
-import static com.opensymphony.xwork2.Action.*;
 import static javax.ws.rs.core.HttpHeaders.LOCATION;
 
-@Results({
-    @Result(name = SUCCESS, type = "json"),
-    @Result(name = INPUT, type = "json"),
-    @Result(name = ERROR, type = "json")
-})
 @Result(type = "json")
 @Namespace("/api/message")
 @ParentPackage("json-default")
-//@javax.enterprise.context.Dependent
 @InterceptorRef(value = "json")
-public class SaveMessageAction extends ActionSupport {
+//@javax.enterprise.context.Dependent
+public class New extends ActionSupport {
 
   @Inject
   MessagePublisher messagePublisher;
@@ -36,12 +30,14 @@ public class SaveMessageAction extends ActionSupport {
   @Setter
   String message;
 
-  @Action("/api/message/save")
+  @Action("new")
   public void save() throws Exception {
     final MessageCreatedEvent event = messagePublisher.publish(message);
-    final UUID uuid = event.getMessage().getId();
+    final String id = event.getMessage().getId();
     final HttpServletRequest request = ServletActionContext.getRequest();
-    final String location = hateoas.linkTo(request, uuid.toString());
-    ServletActionContext.getResponse().setHeader(LOCATION, location);
+    final String location = hateoas.linkTo(request, "api", "message", "one", id);
+    final HttpServletResponse response = ServletActionContext.getResponse();
+    response.setHeader(LOCATION, location);
+    response.setStatus(201);
   }
 }

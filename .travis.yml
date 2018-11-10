@@ -33,9 +33,10 @@ script:
 - export root=$(pwd)
 #
 - ./mvnw >/dev/null
+- ./mvnw
 #
 - ./mvnw -pl :java-ee-payara-rest-services -Pbundle >/dev/null
-- java -jar ./java-ee-payara/java-ee-payara-rest-services/target/*-microbundle.jar &
+- java -Djava.net.preferIPv4Stack=true -jar ./java-ee-payara/java-ee-payara-rest-services/target/*-microbundle.jar &
 - wait_for 8080
 - sleep 15
 - http :8080 || true
@@ -47,7 +48,7 @@ script:
 - http -a anything:here :8080
 - stop_any 80 8080
 #
-- java -jar ./dropwizard/dropwizard-rest-services/target/dropwizard-*.jar server ./dropwizard/dropwizard-rest-services/config.yml &
+- java -Djava.net.preferIPv4Stack=true -jar ./dropwizard/dropwizard-rest-services/target/dropwizard-*.jar server ./dropwizard/dropwizard-rest-services/config.yml &
 - wait_for 9000
 - sleep 20
 - http :9000 || true
@@ -59,9 +60,9 @@ script:
 - stop_any 80 9000
 #
 - ./mvnw -pl :struts-rest-services clean package >/dev/null
-- bash ./struts/struts-rest-services/target/*-thorntail.jar &
+- java -Djava.net.preferIPv4Stack=true -jar ./struts/struts-rest-services/target/*-thorntail.jar &
 - wait_for 8080
-- sleep 10
+- sleep 15
 - http :8080
 - http :8080/about
 - http :8080/api
@@ -69,7 +70,9 @@ script:
 - http :8080/api/fail
 - http :8080/api/not-found
 - http :8080/not-found
-- http :8080/api/message/find-all
-- http :8080/api/message/save message=hello
-- http :8080/api/message/find-all
+- http :8080/api/message/all
+- http :8080/api/message/one id=ololo
+- http :8080/api/message/new message=ololo
+- http :8080/api/message/new message=trololo
+- http :8080/api/message/all
 - stop_any 80 8080

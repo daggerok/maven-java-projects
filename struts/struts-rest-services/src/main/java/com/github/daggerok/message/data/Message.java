@@ -1,14 +1,13 @@
 package com.github.daggerok.message.data;
 
-import lombok.*;
-
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor(staticName = "allOf")
-@RequiredArgsConstructor(staticName = "of")
+@AllArgsConstructor(staticName = "of")
 public class Message {
-  UUID id = UUID.randomUUID();
-  @NonNull String body;
+  String id;
+  String body;
 }

@@ -1,13 +1,14 @@
 package com.github.daggerok.message.events;
 
+import com.github.daggerok.message.data.Message;
 import com.github.daggerok.message.data.MessageRepository;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-@Slf4j
+@Log4j2
 @ApplicationScoped
 public class MessageListener {
 
@@ -16,6 +17,7 @@ public class MessageListener {
 
   public void on(@Observes MessageCreatedEvent event) {
     log.info("received: {}", event);
-    messageRepository.save(event.getMessage());
+    final Message message = event.getMessage();
+    messageRepository.save(message);
   }
 }

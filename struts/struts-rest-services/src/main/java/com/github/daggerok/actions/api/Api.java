@@ -3,7 +3,7 @@ package com.github.daggerok.actions.api;
 import com.github.daggerok.rest.Hateoas;
 import com.opensymphony.xwork2.ActionSupport;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.*;
 
@@ -14,16 +14,12 @@ import java.util.Map;
 
 import static com.opensymphony.xwork2.Action.*;
 
-@Slf4j
-@Results({
-    @Result(name = SUCCESS, type = "json"),
-    @Result(name = INPUT, type = "json"),
-    @Result(name = ERROR, type = "json")
-})
-@Namespace("/")
+@Log4j2
+@Namespace("/api")
+@Result(type = "json")
 @ParentPackage("json-default")
 //@javax.enterprise.context.Dependent
-public class AvailableApiAction extends ActionSupport {
+public class Api extends ActionSupport {
 
   @Inject
   Hateoas hateoas;
@@ -33,14 +29,17 @@ public class AvailableApiAction extends ActionSupport {
 
   @Actions({
       @Action("/api"),
+      @Action("/api*"),
       @Action("/api/*"),
   })
   public String execute() {
     final HttpServletRequest request = ServletActionContext.getRequest();
-    api.put("_self", hateoas.linkTo(request));
-    api.put("health", hateoas.linkTo(request, "health"));
-    api.put("fail", hateoas.linkTo(request, "fail"));
-    api.put("save", hateoas.linkTo(request, "save"));
+    api.put(" _self      ", hateoas.linkTo(request, "api"));
+    api.put(" health     ", hateoas.linkTo(request, "api", "health"));
+    api.put(" fail       ", hateoas.linkTo(request, "api", "fail"));
+    api.put(" find all   ", hateoas.linkTo(request, "api", "message", "all"));
+    api.put(" create new ", hateoas.linkTo(request, "api", "message", "new"));
+    api.put(" find one   ", hateoas.linkTo(request, "api", "message", "one"));
     return SUCCESS;
   }
 }

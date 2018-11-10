@@ -1,0 +1,1 @@
+https://books.google.com.ua/books?id=HrFGgg3fPwsC&pg=PA54&lpg=PA54&dq=struts+Parameters+in+namespaces+example+annotation&source=bl&ots=XciA4IWwxQ&sig=tMWF6nxIiXMaNT1H1ratCJ6B3zQ&hl=ru&sa=X&ved=2ahUKEwiBhPiN5sreAhUqtIsKHc7GAoMQ6AEwBXoECAgQAQ#v=onepage&q=struts%20Parameters%20in%20namespaces%20example%20annotation&f=false
