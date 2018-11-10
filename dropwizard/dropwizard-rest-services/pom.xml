@@ -20,7 +20,7 @@
     <dependency>
       <groupId>com.github.daggerok</groupId>
       <artifactId>dropwizard-libraries</artifactId>
-      <version>${parent.version}</version>
+      <version>${project.parent.version}</version>
     </dependency>
 
     <dependency>
@@ -111,5 +111,4 @@
       -->
     </plugins>
   </build>
-
 </project>

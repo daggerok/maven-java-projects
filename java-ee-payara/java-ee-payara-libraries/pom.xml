@@ -23,5 +23,4 @@
       <artifactId>vavr</artifactId>
     </dependency>
   </dependencies>
-
 </project>

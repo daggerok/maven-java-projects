@@ -1,6 +1,13 @@
 = maven-java-projects image:https://travis-ci.org/daggerok/maven-java-projects.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/maven-java-projects"]
 
-.JavaEE
+.Struts
+[source,bash]
+----
+./mvnw -pl :struts-rest-services clean package thorntail:start
+./mvnw -pl :struts-rest-services  thorntail:stop
+----
+
+.JavaEE / Dropwizard
 [source,bash]
 ----
 ./mvnw clean ; ./mvnw

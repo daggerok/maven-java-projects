@@ -16,5 +16,4 @@
     <module>java-ee-payara-libraries</module>
     <module>java-ee-payara-rest-services</module>
   </modules>
-
 </project>
