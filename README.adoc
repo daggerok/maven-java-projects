@@ -1,11 +1,28 @@
 = maven-java-projects image:https://travis-ci.org/daggerok/maven-java-projects.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/maven-java-projects"]
 
+== struts
+
+_run_
+
 .Struts
 [source,bash]
 ----
 ./mvnw -pl :struts-rest-services clean package thorntail:start
 ./mvnw -pl :struts-rest-services  thorntail:stop
 ----
+
+_debug_
+
+1) run maven command:
+
+[source,bash]
+----
+./mvnw -f ./struts/struts-rest-plugin-services/pom.xml -Pdebug
+----
+
+2) attach IDE debugging process on port 5005
+
+== other apps
 
 .JavaEE / Dropwizard
 [source,bash]
