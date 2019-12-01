@@ -32,7 +32,7 @@ _debug_
 java -jar ./dropwizard/dropwizard-rest-services/target/dropwizard-*.jar server ./dropwizard/dropwizard-rest-services/config.yml
 ----
 
-== my other payara-related repositories
+== other related repositories
 
 * link:https://github.com/daggerok/payara-micro-gradle-no-plugin[GitHub: daggerok/payara-micro-gradle-no-plugin]
 * link:https://github.com/daggerok/payara-micro-gradle-plugin-build-script[GitHub: daggerok/payara-micro-gradle-plugin-build-script]

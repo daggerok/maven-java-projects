@@ -30,10 +30,15 @@
     <lombok.version>1.18.10</lombok.version>
     <jackson.version>2.10.1</jackson.version>
     <assertj.version>3.14.0</assertj.version>
-    <thorntail.version>2.2.1.Final</thorntail.version>
+    <thorntail.version>2.5.0.Final</thorntail.version>
     <junit-jupiter.version>5.6.0-M1</junit-jupiter.version>
     <maven-war-plugin.version>3.2.3</maven-war-plugin.version>
-    <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+    <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+    <payara-micro-maven-plugin.version>1.0.6</payara-micro-maven-plugin.version>
+    <!--<payara.micro.version>5.182</payara.micro.version>-->
+    <!--<payara.micro.version>5.183</payara.micro.version>-->
+    <payara.micro.version>5.194</payara.micro.version>
   </properties>
 
   <modules>
@@ -182,4 +187,25 @@
       </plugins>
     </pluginManagement>
   </build>
+
+  <profiles>
+    <profile>
+      <id>jdk9+</id>
+      <activation>
+        <jdk>[9,)</jdk>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>javax.xml.bind</groupId>
+          <artifactId>jaxb-api</artifactId>
+          <version>2.4.0-b180830.0359</version>
+        </dependency>
+        <dependency>
+          <groupId>org.glassfish.jaxb</groupId>
+          <artifactId>jaxb-runtime</artifactId>
+          <version>2.4.0-b180830.0438</version>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
 </project>

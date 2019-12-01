@@ -15,8 +15,6 @@
 
   <properties>
     <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-    <!--<payara.micro.version>5.182</payara.micro.version>-->
-    <payara.micro.version>5.183</payara.micro.version>
   </properties>
 
   <dependencies>
@@ -74,7 +72,7 @@
           <plugin>
             <groupId>fish.payara.maven.plugins</groupId>
             <artifactId>payara-micro-maven-plugin</artifactId>
-            <version>1.0.2</version>
+            <version>${payara-micro-maven-plugin.version}</version>
             <executions>
               <execution>
                 <goals>
@@ -110,7 +108,7 @@
           <plugin>
             <groupId>fish.payara.maven.plugins</groupId>
             <artifactId>payara-micro-maven-plugin</artifactId>
-            <version>1.0.2</version>
+            <version>${payara-micro-maven-plugin.version}</version>
             <executions>
               <execution>
                 <goals>
@@ -125,6 +123,106 @@
             </configuration>
           </plugin>
         </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>java9+</id>
+      <activation>
+        <jdk>[11,)</jdk>
+      </activation>
+      <properties>
+        <java.version>11</java.version>
+      </properties>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <version>${maven-compiler-plugin.version}</version>
+              <configuration>
+                <release>${java.version}</release>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <version>${maven-surefire-plugin.version}</version>
+              <configuration>
+                <argLine>
+                  --illegal-access=permit
+                </argLine>
+              </configuration>
+            </plugin>
+            <!--<plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-failsafe-plugin</artifactId>
+              <version>2.22.2</version>
+              <configuration>
+                <argLine>
+                  &#45;&#45;illegal-access=permit
+                </argLine>
+              </configuration>
+            </plugin>-->
+            <plugin>
+              <groupId>fish.payara.maven.plugins</groupId>
+              <artifactId>payara-micro-maven-plugin</artifactId>
+              <version>${payara-micro-maven-plugin.version}</version>
+              <configuration>
+                <javaCommandLineOptions>
+                  <option>
+                    <value>-Xdebug</value>
+                  </option>
+                  <option>
+                    <key>-Xrunjdwp:transport</key>
+                    <value>dt_socket,server=y,suspend=y,address=5005</value>
+                  </option>
+                  <option>
+                    <value>--illegal-access=permit</value>
+                  </option>
+                  <option>
+                    <key>--add-modules</key>
+                    <value>java.se</value>
+                  </option>
+                  <option>
+                    <key>--add-exports</key>
+                    <value>java.base/jdk.internal.ref=ALL-UNNAMED</value>
+                  </option>
+                  <option>
+                    <key>--add-opens</key>
+                    <value>java.base/java.lang=ALL-UNNAMED</value>
+                  </option>
+                  <option>
+                    <key>--add-opens</key>
+                    <value>java.base/java.nio=ALL-UNNAMED</value>
+                  </option>
+                  <option>
+                    <key>--add-opens</key>
+                    <value>java.base/sun.nio.ch=ALL-UNNAMED</value>
+                  </option>
+                  <option>
+                    <key>--add-opens</key>
+                    <value>java.management/sun.management=ALL-UNNAMED</value>
+                  </option>
+                  <option>
+                    <key>--add-opens</key>
+                    <value>jdk.management/com.sun.management.internal=ALL-UNNAMED</value>
+                  </option>
+                  <!-- https://github.com/java-decompiler/jd-gui/issues/187 -->
+                  <option>
+                    <key>--add-opens</key>
+                    <value>java.base/jdk.internal.loader=ALL-UNNAMED</value>
+                  </option>
+                  <option>
+                    <key>--add-opens</key>
+                    <value>jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED</value>
+                  </option>
+                </javaCommandLineOptions>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
       </build>
     </profile>
   </profiles>
