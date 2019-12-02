@@ -40,7 +40,7 @@ jobs:
         - ./mvnw -pl :java-ee-payara-rest-services -Pbundle
         - java -Djava.net.preferIPv4Stack=true -jar ./java-ee-payara/java-ee-payara-rest-services/target/*-microbundle.jar &
         - wait_for 8080
-        - sleep 13
+        - sleep 35
         - http :8080 || echo unauthorized expected
         - http -a anything:here :8080
         - http -a abc:xyz :8080/resp\?page=-4
