@@ -20,7 +20,7 @@
 
     <failOnMissingWebXml>false</failOnMissingWebXml>
 
-    <h2.version>1.4.196</h2.version>
+    <h2.version>2.1.210</h2.version>
     <vavr.version>0.10.2</vavr.version>
     <log4j.version>2.12.1</log4j.version>
     <slf4j.version>1.7.29</slf4j.version>
